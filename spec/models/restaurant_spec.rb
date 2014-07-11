@@ -30,4 +30,23 @@ RSpec.describe Restaurant, :type => :model do
 	  	end
   	end
   end
+
+  describe 'validity' do
+  	it 'should have a name' do
+  		restaurant = Restaurant.new(name: nil)
+  		expect(restaurant).to have(2).error_on(:name)
+  	end
+   	it 'should have a name with the first letter capitalized' do
+  		restaurant = Restaurant.new(name: 'burger king')
+  		expect(restaurant).to have(1).error_on(:name)
+  	end
+    	it 'should have a cuisine' do
+  		restaurant = Restaurant.new(cuisine: nil)
+  		expect(restaurant).to have(2).errors_on(:cuisine)
+  	end
+     	it 'should have a cuisine with atleast 3 characters' do
+  		restaurant = Restaurant.new(cuisine: 'ff')
+  		expect(restaurant).to have(1).error_on(:cuisine)
+  	end
+  end
 end
