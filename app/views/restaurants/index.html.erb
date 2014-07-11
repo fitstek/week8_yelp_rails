@@ -1,8 +1,11 @@
 <% if @restaurants.any? %>
 	<ul>
 	<% @restaurants.each do |restaurant| %>
-		<li><%= restaurant.name %>
-		<%= link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant.id)%></li>
+		<li>
+			<%= restaurant.name %> (<%=restaurant.cuisine %>)
+			<%= link_to "Edit #{restaurant.name} ", edit_restaurant_path(restaurant.id) %>
+			<%= link_to "Delete #{restaurant.name} ", restaurant_path(restaurant.id) , method: :delete , 'data-confirm' => 'Are you sure you want to delete this?'  %>
+		</li>
 	<% end %>
 	</ul>
 <% else %>
