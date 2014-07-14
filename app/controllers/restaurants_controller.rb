@@ -1,10 +1,14 @@
 class RestaurantsController < ApplicationController
+
+	before_action :authenticate_user!, except: [:index]
+
 	def index
 		@restaurants = Restaurant.all
 		@review = Review.new
 	end
 
 	def new
+		authenticate_user!
 		@restaurant = Restaurant.new
 	end
 
@@ -23,8 +27,11 @@ class RestaurantsController < ApplicationController
 
 	def update
 		@restaurant = Restaurant.find(params[:id])
-		@restaurant.update restaurant_params
-		redirect_to '/restaurants'
+		if @restaurant.update restaurant_params
+			redirect_to '/restaurants'
+		else
+			render 'new'
+		end
 	end
 
 	def destroy
