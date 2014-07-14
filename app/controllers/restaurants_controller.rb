@@ -8,12 +8,13 @@ class RestaurantsController < ApplicationController
 	end
 
 	def new
-		authenticate_user!
 		@restaurant = Restaurant.new
 	end
 
 	def create
 		@restaurant = Restaurant.new restaurant_params
+		@restaurant.user = current_user
+
 		if @restaurant.save
 			redirect_to '/restaurants'
 		else
@@ -22,11 +23,15 @@ class RestaurantsController < ApplicationController
 	end
 
 	def edit
-		@restaurant = Restaurant.find(params[:id])
+		@restaurant = current_user.restaurants.find(params[:id])
+		rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Not one of your restaurants'
+		redirect_to '/restaurants'
 	end
 
 	def update
-		@restaurant = Restaurant.find(params[:id])
+		@restaurant = current_user.restaurants.find(params[:id])
+		
 		if @restaurant.update restaurant_params
 			redirect_to '/restaurants'
 		else
@@ -35,9 +40,13 @@ class RestaurantsController < ApplicationController
 	end
 
 	def destroy
-		@restaurant = Restaurant.find(params[:id])
+		@restaurant = current_user.restaurants.find(params[:id])
 		@restaurant.destroy
 		flash[:notice] = "#{@restaurant.name} successfully deleted"
+
+	rescue ActiveRecord::RecordNotFound
+		flash[:notice] = 'Not one of your restaurants'
+		ensure
 		redirect_to '/restaurants'
 	end
 

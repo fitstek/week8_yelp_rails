@@ -103,13 +103,5 @@ describe 'restaurant editing and deleting' do
 				expect(page).to have_content 'error'
 			end
 		end	
-
-		it 'can delete restaurants' do
-			visit '/restaurants'
-			click_link'Delete KFC'
-
-			expect(page).not_to have_content 'KFC (Chicken)'
-			expect(page).to have_content 'KFC successfully deleted'
-		end
 	end	
 end
