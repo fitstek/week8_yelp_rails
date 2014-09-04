@@ -1,17 +1,17 @@
-Description
-=========
+# Description
+
 
 A clone of the yelp website done in Rails. A user can sign_up create a review for a restaurant with rating. 
 
-Technologies Used
-=========
+# Technologies Used
+
 
 * RoR
 * AJAX
 * Capybara for feature testing
 
-How to use
-=========
+# How to use
+
 
 * git clone git@github.com:fitstek/week8_yelp_rails.git
 * cd week8_yelp_rails
